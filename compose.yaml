@@ -1,0 +1,12 @@
+﻿services:
+  webapplication1:
+    image: webapplication1
+    build:
+      context: .
+      dockerfile: WebApplication1/Dockerfile
+
+  jewelry.api:
+    image: jewelry.api
+    build:
+      context: .
+      dockerfile: Jewelry.API/Dockerfile
