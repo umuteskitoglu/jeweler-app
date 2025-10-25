@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Domain.ValueObjects;
 
 public abstract class ValueObject

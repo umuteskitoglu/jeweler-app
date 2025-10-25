@@ -3,7 +3,7 @@ namespace Application.Interfaces;
 
 public interface IProductRepository
 {
-    Task<bool> AddAsync(Product product);
+    Task<Product> AddAsync(Product product);
     Task<IEnumerable<Product>> GetAllAsync();
     Task<Product?> GetByIdAsync(Guid id);
     Task<bool> UpdateAsync(Product product);

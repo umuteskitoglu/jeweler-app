@@ -8,4 +8,6 @@ public class UpdateProductDto
     public ProductName Name { get; set; } = null!;
     public Money Price { get; set; }
     public decimal Stock { get; set; }
+    public Guid CategoryId { get; set; }
+    public Guid UpdatedBy { get; set; }
 }

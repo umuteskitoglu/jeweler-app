@@ -12,6 +12,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.ToTable("Products");
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).ValueGeneratedNever();
+        builder.Property(p => p.CategoryId).IsRequired();
+        builder.HasOne(p => p.Category)
+            .WithMany()
+            .HasForeignKey(p => p.CategoryId);
         builder.OwnsOne(p => p.Name, pn =>
         {
             pn.Property(p => p.Value)
@@ -62,6 +66,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             ai.Property(a => a.At)
                 .HasColumnName("DeletedAt");
         });
-        builder.HasQueryFilter(p => !p.IsDeleted);
+        builder.HasQueryFilter(p => p.Deleted == null || p.Deleted.At == null);
     }
 }

@@ -1,32 +1,52 @@
 using Application.Interfaces;
 using Domain.Entities;
+using Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services;
 
-public class ProductRepository:IProductRepository
+public class ProductRepository : IProductRepository
 {
-    public Task<bool> AddAsync(Product product)
+    private readonly ApplicationDbContext _dbContext;
+
+    public ProductRepository(ApplicationDbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
+    }
+
+    public async Task<Product> AddAsync(Product product)
+    {
+        _dbContext.Products.Add(product);
+        await _dbContext.SaveChangesAsync();
+        return product;
     }
 
     public Task<IEnumerable<Product>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return Task.FromResult(_dbContext.Products
+            .Include(p => p.Category)
+            .AsEnumerable());
     }
 
     public Task<Product?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var product = _dbContext.Products
+            .Include(p => p.Category)
+            .FirstOrDefault(p => p.Id == id);
+        return Task.FromResult(product);
     }
 
-    public Task<bool> UpdateAsync(Product product)
+    public async Task<bool> UpdateAsync(Product product)
     {
-        throw new NotImplementedException();
+        _dbContext.Products.Update(product);
+        var result = await _dbContext.SaveChangesAsync();
+        return result > 0;
     }
 
-    public Task<bool> DeleteAsync(Product product)
+    public async Task<bool> DeleteAsync(Product product)
     {
-        throw new NotImplementedException();
+        _dbContext.Products.Remove(product);
+        var result = await _dbContext.SaveChangesAsync();
+        return result > 0;
     }
 }

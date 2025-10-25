@@ -2,11 +2,10 @@ namespace Domain.ValueObjects;
 
 public class AuditInfo : ValueObject
 {
-    private AuditInfo() { }
+    public AuditInfo() { }
+    
     public AuditInfo(DateTime? at, Guid by)
     {
-        if (by == Guid.Empty)
-            throw new ArgumentException("Audit by id cannot be empty");
         At = at;
         By = by;
     }

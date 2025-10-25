@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Products.Dtos;
 using Domain.Entities;
+using Domain.ValueObjects;
 using MediatR;
 
 namespace Application.Products.Commands;
@@ -29,9 +30,17 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         Product? product = await _productRepository.GetByIdAsync(request.product.Id);
         if (product == null)
             throw new Exception("Product not found");
-        product.Name = request.product.Name;
-        product.Price = request.product.Price;
-        product.Stock = request.product.Stock;
+        if (request.product.Price.Amount < 0)
+        {
+            throw new ArgumentException("Product price cannot be negative.");
+        }
+
+        if (request.product.Stock < 0)
+        {
+            throw new ArgumentException("Product stock cannot be negative.");
+        }
+
+        product.Update(request.product.Name, request.product.Price, request.product.Stock, request.product.CategoryId, new AuditInfo(DateTime.UtcNow, request.product.UpdatedBy));
         return await _productRepository.UpdateAsync(product);
     }
 }

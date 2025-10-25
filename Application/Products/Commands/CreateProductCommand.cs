@@ -3,15 +3,16 @@ using Application.Products.Dtos;
 using MediatR;
 using Domain.Entities;
 using Domain.ValueObjects;
+using Application.Configuration;
 
 namespace Application.Products.Commands;
 
-public abstract class CreateProductCommand(CreateProductDto createProduct) : IRequest<bool>
+public class CreateProductCommand(CreateProductDto createProduct) : IRequest<Product>
 {
     public CreateProductDto CreateProduct { get; set; } = createProduct;
 }
 
-public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, bool>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, Product>
 {
     private readonly IProductRepository _productRepository;
 
@@ -20,11 +21,24 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _productRepository = productRepository;
     }
 
-    public Task<bool> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-        Product product = new Product(request.CreateProduct.Name, request.CreateProduct.Price,
+        if (request.CreateProduct.Price.Amount < 0)
+        {
+            throw new ArgumentException("Product price cannot be negative.");
+        }
+
+        if (request.CreateProduct.Stock < 0)
+        {
+            throw new ArgumentException("Product stock cannot be negative.");
+        }
+
+        Product product = new Product(
+            request.CreateProduct.Name,
+            request.CreateProduct.Price,
             request.CreateProduct.Stock,
-            new AuditInfo(DateTime.UtcNow, Guid.Empty));
+            request.CreateProduct.CategoryId,
+            new AuditInfo(DateTime.UtcNow, Guid.Empty)); // TODO: Replace Guid.Empty with actual user ID
         return _productRepository.AddAsync(product);
     }
 }
