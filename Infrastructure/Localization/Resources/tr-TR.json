@@ -1,0 +1,73 @@
+{
+  "Common": {
+    "Success": "Başarılı",
+    "Error": "Hata",
+    "NotFound": "Bulunamadı",
+    "InvalidRequest": "Geçersiz istek"
+  },
+  "User": {
+    "RegisteredSuccessfully": "Kullanıcı başarıyla kaydedildi",
+    "AlreadyExists": "Bu e-posta adresi ile kayıtlı bir kullanıcı zaten mevcut",
+    "InvalidCredentials": "E-posta veya şifre hatalı",
+    "LoggedInSuccessfully": "Giriş başarılı",
+    "LoggedOutSuccessfully": "Çıkış başarılı",
+    "TokenRefreshedSuccessfully": "Token başarıyla yenilendi",
+    "InvalidToken": "Geçersiz token",
+    "RefreshTokenRequired": "Refresh token gerekli"
+  },
+  "Product": {
+    "CreatedSuccessfully": "Ürün başarıyla oluşturuldu",
+    "UpdatedSuccessfully": "Ürün başarıyla güncellendi",
+    "NotFound": "Ürün bulunamadı",
+    "PriceCannotBeNegative": "Ürün fiyatı negatif olamaz",
+    "StockCannotBeNegative": "Ürün stok miktarı negatif olamaz",
+    "InsufficientStock": "{0} ürünü için yeterli stok yok"
+  },
+  "Order": {
+    "CreatedSuccessfully": "Sipariş başarıyla oluşturuldu",
+    "NotFound": "Sipariş bulunamadı",
+    "MustContainItems": "Sipariş en az bir ürün içermelidir",
+    "StatusUpdatedSuccessfully": "Sipariş durumu başarıyla güncellendi"
+  },
+  "Favorite": {
+    "AddedSuccessfully": "Ürün favorilere eklendi",
+    "RemovedSuccessfully": "Ürün favorilerden çıkarıldı",
+    "AlreadyExists": "Ürün zaten favorilerde",
+    "NotFound": "Favori bulunamadı",
+    "ProductNotFound": "Ürün bulunamadı",
+    "UserNotFound": "Kullanıcı bulunamadı"
+  },
+  "JewelryType": {
+    "Ring": "Yüzük",
+    "Necklace": "Kolye",
+    "Bracelet": "Bileklik",
+    "Earring": "Küpe",
+    "Pendant": "Kolye Ucu",
+    "Anklet": "Halhal",
+    "Brooch": "Broş",
+    "Chain": "Zincir",
+    "Charm": "Charm",
+    "Set": "Set",
+    "Other": "Diğer"
+  },
+  "OrderStatus": {
+    "Pending": "Beklemede",
+    "Confirmed": "Onaylandı",
+    "Paid": "Ödendi",
+    "Shipped": "Kargoya Verildi",
+    "Completed": "Tamamlandı",
+    "Cancelled": "İptal Edildi"
+  },
+  "Validation": {
+    "Error": "Doğrulama hatası",
+    "FieldRequired": "{0} alanı zorunludur",
+    "InvalidEmailFormat": "Geçersiz e-posta formatı",
+    "PasswordTooShort": "Şifre en az {0} karakter olmalıdır"
+  },
+  "Specification": {
+    "CannotSetNecklaceSpecForNonNecklace": "Kolye olmayan bir ürün için kolye özelliği ayarlanamaz",
+    "CannotSetRingSpecForNonRing": "Yüzük olmayan bir ürün için yüzük özelliği ayarlanamaz",
+    "CannotSetEarringSpecForNonEarring": "Küpe olmayan bir ürün için küpe özelliği ayarlanamaz"
+  }
+}
+

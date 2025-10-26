@@ -1,0 +1,73 @@
+{
+  "Common": {
+    "Success": "Success",
+    "Error": "Error",
+    "NotFound": "Not Found",
+    "InvalidRequest": "Invalid Request"
+  },
+  "User": {
+    "RegisteredSuccessfully": "User registered successfully",
+    "AlreadyExists": "User with the given email already exists",
+    "InvalidCredentials": "Invalid credentials",
+    "LoggedInSuccessfully": "Logged in successfully",
+    "LoggedOutSuccessfully": "Logged out successfully",
+    "TokenRefreshedSuccessfully": "Token refreshed successfully",
+    "InvalidToken": "Invalid token",
+    "RefreshTokenRequired": "Refresh token is required"
+  },
+  "Product": {
+    "CreatedSuccessfully": "Product created successfully",
+    "UpdatedSuccessfully": "Product updated successfully",
+    "NotFound": "Product not found",
+    "PriceCannotBeNegative": "Product price cannot be negative",
+    "StockCannotBeNegative": "Product stock cannot be negative",
+    "InsufficientStock": "Insufficient stock for product {0}"
+  },
+  "Order": {
+    "CreatedSuccessfully": "Order created successfully",
+    "NotFound": "Order not found",
+    "MustContainItems": "Order must contain at least one item",
+    "StatusUpdatedSuccessfully": "Order status updated successfully"
+  },
+  "Favorite": {
+    "AddedSuccessfully": "Product added to favorites",
+    "RemovedSuccessfully": "Product removed from favorites",
+    "AlreadyExists": "Product already in favorites",
+    "NotFound": "Favorite not found",
+    "ProductNotFound": "Product not found",
+    "UserNotFound": "User not found"
+  },
+  "JewelryType": {
+    "Ring": "Ring",
+    "Necklace": "Necklace",
+    "Bracelet": "Bracelet",
+    "Earring": "Earring",
+    "Pendant": "Pendant",
+    "Anklet": "Anklet",
+    "Brooch": "Brooch",
+    "Chain": "Chain",
+    "Charm": "Charm",
+    "Set": "Set",
+    "Other": "Other"
+  },
+  "OrderStatus": {
+    "Pending": "Pending",
+    "Confirmed": "Confirmed",
+    "Paid": "Paid",
+    "Shipped": "Shipped",
+    "Completed": "Completed",
+    "Cancelled": "Cancelled"
+  },
+  "Validation": {
+    "Error": "Validation error",
+    "FieldRequired": "{0} field is required",
+    "InvalidEmailFormat": "Invalid email format",
+    "PasswordTooShort": "Password must be at least {0} characters"
+  },
+  "Specification": {
+    "CannotSetNecklaceSpecForNonNecklace": "Cannot set necklace specification for non-necklace product",
+    "CannotSetRingSpecForNonRing": "Cannot set ring specification for non-ring product",
+    "CannotSetEarringSpecForNonEarring": "Cannot set earring specification for non-earring product"
+  }
+}
+

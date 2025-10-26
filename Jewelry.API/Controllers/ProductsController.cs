@@ -44,4 +44,24 @@ public class ProductsController : BaseController
         return Mediator.Send(new CreateProductCommand(product));
     }
     
+    /// <summary>
+    /// Update an existing product
+    /// </summary>
+    /// <param name="product">Product update details</param>
+    /// <returns>Success status</returns>
+    /// <response code="200">Product updated successfully</response>
+    /// <response code="404">Product not found</response>
+    [HttpPut("update-product")]
+    public async Task<ActionResult<bool>> Update(UpdateProductDto product)
+    {
+        try
+        {
+            var result = await Mediator.Send(new UpdateProductCommand(product));
+            return Ok(new { success = result, message = "Product updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return NotFound(new { error = ex.Message });
+        }
+    }
 }

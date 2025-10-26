@@ -1,7 +1,9 @@
 using Application.Configuration;
 using Application.Interfaces;
+using Application.Localization;
 using Application.Services;
 using Infrastructure.Configuration;
+using Infrastructure.Localization;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,9 @@ public static class DependencyInjection
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName));
         });
 
+        // JSON-based Localization
+        services.AddSingleton<ILocalizationService, LocalizationService>();
+
         services.AddHttpClient<IPaymentService, IyzicoPaymentService>();
 
         services.AddScoped<IProductRepository, ProductRepository>();
@@ -32,6 +37,7 @@ public static class DependencyInjection
         services.AddScoped<IInventoryRepository, InventoryRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IPaymentRepository, PaymentRepository>();
+        services.AddScoped<IFavoriteRepository, FavoriteRepository>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();

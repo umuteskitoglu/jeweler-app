@@ -21,7 +21,7 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
         _productRepository = productRepository;
     }
 
-    public Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    public async Task<Product> Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
         if (request.CreateProduct.Price.Amount < 0)
         {
@@ -33,12 +33,54 @@ public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand,
             throw new ArgumentException("Product stock cannot be negative.");
         }
 
-        Product product = new Product(
+        var product = new Product(
             request.CreateProduct.Name,
             request.CreateProduct.Price,
             request.CreateProduct.Stock,
             request.CreateProduct.CategoryId,
-            new AuditInfo(DateTime.UtcNow, Guid.Empty)); // TODO: Replace Guid.Empty with actual user ID
-        return _productRepository.AddAsync(product);
+            new AuditInfo(DateTime.UtcNow, Guid.Empty), // TODO: Replace Guid.Empty with actual user ID
+            request.CreateProduct.JewelryType,
+            request.CreateProduct.Description,
+            request.CreateProduct.SKU,
+            request.CreateProduct.Material,
+            request.CreateProduct.Dimensions,
+            request.CreateProduct.CollectionName,
+            request.CreateProduct.TargetGender
+        );
+
+        // Add gemstones
+        foreach (var gemstone in request.CreateProduct.Gemstones)
+        {
+            product.AddGemstone(gemstone);
+        }
+
+        // Add images
+        foreach (var imageUrl in request.CreateProduct.ImageUrls)
+        {
+            product.AddImage(imageUrl);
+        }
+
+        // Set type-specific specifications
+        if (request.CreateProduct.NecklaceSpec != null)
+        {
+            product.SetNecklaceSpecification(request.CreateProduct.NecklaceSpec);
+        }
+        if (request.CreateProduct.RingSpec != null)
+        {
+            product.SetRingSpecification(request.CreateProduct.RingSpec);
+        }
+        if (request.CreateProduct.EarringSpec != null)
+        {
+            product.SetEarringSpecification(request.CreateProduct.EarringSpec);
+        }
+
+        // Set other properties
+        product.SetCustomizable(request.CreateProduct.IsCustomizable);
+        if (!string.IsNullOrWhiteSpace(request.CreateProduct.CertificateNumber))
+        {
+            product.SetCertificate(request.CreateProduct.CertificateNumber);
+        }
+
+        return await _productRepository.AddAsync(product);
     }
 }

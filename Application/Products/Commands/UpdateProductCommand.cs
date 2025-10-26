@@ -30,6 +30,7 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
         Product? product = await _productRepository.GetByIdAsync(request.product.Id);
         if (product == null)
             throw new Exception("Product not found");
+        
         if (request.product.Price.Amount < 0)
         {
             throw new ArgumentException("Product price cannot be negative.");
@@ -40,7 +41,51 @@ public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand,
             throw new ArgumentException("Product stock cannot be negative.");
         }
 
-        product.Update(request.product.Name, request.product.Price, request.product.Stock, request.product.CategoryId, new AuditInfo(DateTime.UtcNow, request.product.UpdatedBy));
+        product.Update(
+            request.product.Name, 
+            request.product.Price, 
+            request.product.Stock, 
+            request.product.CategoryId, 
+            new AuditInfo(DateTime.UtcNow, request.product.UpdatedBy),
+            request.product.JewelryType,
+            request.product.Description,
+            request.product.Material,
+            request.product.Dimensions,
+            request.product.CollectionName,
+            request.product.TargetGender
+        );
+
+        // Update gemstones
+        product.ClearGemstones();
+        foreach (var gemstone in request.product.Gemstones)
+        {
+            product.AddGemstone(gemstone);
+        }
+
+        // Update type-specific specifications
+        if (request.product.NecklaceSpec != null)
+        {
+            product.SetNecklaceSpecification(request.product.NecklaceSpec);
+        }
+        if (request.product.RingSpec != null)
+        {
+            product.SetRingSpecification(request.product.RingSpec);
+        }
+        if (request.product.EarringSpec != null)
+        {
+            product.SetEarringSpecification(request.product.EarringSpec);
+        }
+
+        // Note: For images, you might want a more sophisticated update strategy
+        // For now, this is a simple example
+
+        // Update other properties
+        product.SetCustomizable(request.product.IsCustomizable);
+        if (!string.IsNullOrWhiteSpace(request.product.CertificateNumber))
+        {
+            product.SetCertificate(request.product.CertificateNumber);
+        }
+
         return await _productRepository.UpdateAsync(product);
     }
 }
